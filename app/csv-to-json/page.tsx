@@ -89,12 +89,12 @@ export default function CsvToJsonPage() {
   }
 
   return (
-    <div className="mx-auto max-w-[1200px] px-6 py-12">
+    <div className="mx-auto max-w-300 px-6 py-12">
       <div className="mb-8">
         <h1 className="text-[32px] font-normal tracking-[-0.02em] text-ink sm:text-[36px]">
           CSV to JSON Converter
         </h1>
-        <p className="mt-2 max-w-[60ch] text-[16px] leading-[1.5] text-body">
+        <p className="mt-2 max-w-[60ch] text-[16px] leading-normal text-body">
           Paste CSV data or upload a file and get a clean JSON array of
           objects, with numbers and booleans coerced to real types — entirely
           in your browser.

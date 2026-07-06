@@ -92,12 +92,12 @@ export default function CsvToSqlPage() {
   }
 
   return (
-    <div className="mx-auto max-w-[1200px] px-6 py-12">
+    <div className="mx-auto max-w-300 px-6 py-12">
       <div className="mb-8">
         <h1 className="text-[32px] font-normal tracking-[-0.02em] text-ink sm:text-[36px]">
           CSV to SQL Converter
         </h1>
-        <p className="mt-2 max-w-[60ch] text-[16px] leading-[1.5] text-body">
+        <p className="mt-2 max-w-[60ch] text-[16px] leading-normal text-body">
           Paste CSV data or upload a file. TableShift infers column types and
           generates a ready-to-run CREATE TABLE and INSERT statements —
           entirely in your browser.
