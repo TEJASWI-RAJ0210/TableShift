@@ -50,7 +50,7 @@ export default function InputPanel({
                 onChange={(e)=> onChange(e.target.value)}
                 placeholder={placeholder}
                 spellCheck={false}
-                className="h-80 w-full resize-none bg-canvas-soft p-4 font-mono text-[13px] leading-1.5 text-ink placeholder:text-muted-soft focus:outline-none"
+                className="h-80 w-full resize-none bg-canvas-soft p-4 font-mono text-[13px] leading-6 text-ink placeholder:text-muted-soft focus:outline-none"
             />
         </div>
     );
