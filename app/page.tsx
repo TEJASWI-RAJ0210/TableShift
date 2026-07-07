@@ -12,25 +12,25 @@ const converters = [
     href: "/csv-to-json",
     title: "CSV to JSON",
     description: "Turn spreadsheet rows into a clean JSON array of objects.",
-    live: false,
+    live: true,
   },
   {
     href: "/json-to-sql",
     title: "JSON to SQL",
     description: "Infer a table schema and statements directly from a JSON sample.",
-    live: false,
+    live: true,
   },
   {
     href: "/json-to-schema",
     title: "JSON to Schema",
     description: "Generate a JSON Schema or OpenAPI fragment from a sample payload.",
-    live: false,
+    live: true,
   },
 ];
 
 export default function Home() {
   return (
-    <div className="mx-auto max-w-[1200px] px-6">
+    <div className="mx-auto max-w-300 px-6">
       <section className="flex flex-col items-start gap-6 py-20 sm:py-24">
         <h1 className="max-w-[18ch] text-[40px] font-normal leading-[1.1] tracking-[-0.02em] text-ink sm:text-[56px]">
           Move data between formats, instantly.
