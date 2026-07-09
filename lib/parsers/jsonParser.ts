@@ -51,22 +51,39 @@ for (const item of items) {
 }
 const allKeys = Array.from(keySet);
 
-  const rows: Record<string, string | null>[] = items.map((item) => {
-    const row: Record<string, string | null> = {};
+const rows: Record<string, string | null>[] = items.map((item) => {
+  const row: Record<string, string | null> = {};
+  for (const key of allKeys) {
+    const val = (item as Record<string, unknown>)[key];
+    if (val === undefined || val === null) {
+      row[key] = null;
+    } else if (typeof val === "object") {
+      row[key] = JSON.stringify(val);
+    } else {
+      row[key] = String(val);
+    }
+  }
+  return row;
+});
+
+// Track which keys came from nested objects/arrays so we can
+// force their column type to TEXT after inference.
+const objectKeys = new Set<string>();
+for (const item of items) {
+  if (typeof item === "object" && item !== null && !Array.isArray(item)) {
     for (const key of allKeys) {
       const val = (item as Record<string, unknown>)[key];
-      if (val === undefined || val === null) {
-        row[key] = null;
-      } else if (typeof val === "object") {
-        // Nested objects/arrays: stringify them → TEXT column
-        row[key] = JSON.stringify(val);
-      } else {
-        row[key] = String(val);
+      if (val !== null && typeof val === "object") {
+        objectKeys.add(key);
       }
     }
-    return row;
-  });
+  }
+}
 
-  const columns = inferColumns(rows);
+
+  const columns = inferColumns(rows).map((col) =>
+  objectKeys.has(col.name) ? { ...col, type: "TEXT" as const } : col
+);
+
   return { model: { columns, rows } };
 }
