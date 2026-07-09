@@ -130,18 +130,6 @@ Color tokens, typography scale, and component patterns are all defined as CSS cu
 
 ---
 
-## Roadmap
-
-- [ ] SQL → CSV / JSON (reverse conversion)
-- [ ] Excel export from JSON/SQL input
-- [ ] Mobile navigation menu
-- [ ] Per-page SEO metadata
-- [ ] Saved conversion history (optional login, Phase 2)
-- [ ] Developer API (rate-limited, key-based, Phase 2)
-- [ ] More SQL dialects (Oracle, BigQuery, Snowflake)
-
----
-
 ## Contributing
 
 Pull requests are welcome. For significant changes, please open an issue first to discuss what you'd like to change.
@@ -165,4 +153,4 @@ MIT — see [LICENSE](LICENSE) for details.
 
 ---
 
-Built by [your name](https://github.com/TEJASWI-RAJ0210) 
+Built by [Tejaswi Raj](https://github.com/TEJASWI-RAJ0210) 
