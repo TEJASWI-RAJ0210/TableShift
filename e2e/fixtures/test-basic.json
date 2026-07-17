@@ -1,0 +1,5 @@
+[
+  { "id": 1, "name": "Asha Verma", "email": "asha@example.com", "is_active": true },
+  { "id": 2, "name": "Rohit Singh", "email": "rohit@example.com", "is_active": true },
+  { "id": 3, "name": "Meera Iyer", "email": "meera@example.com", "is_active": false }
+]
