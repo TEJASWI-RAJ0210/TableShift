@@ -3,6 +3,7 @@ import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import ErrorBoundary from "@/components/ErrorBoundary";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -45,7 +46,7 @@ export default function RootLayout({
       </head>
       <body className="min-h-full flex flex-col bg-canvas text-ink font-sans">
         <Header />
-        <main className="flex-1">{children}</main>
+        <main className="flex-1"><ErrorBoundary>{children}</ErrorBoundary></main>
         <Footer />
       </body>
     </html>
