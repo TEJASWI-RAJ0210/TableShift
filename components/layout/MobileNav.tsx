@@ -1,71 +1,112 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ArrowRight } from "lucide-react";
 
 const converters = [
-  { href: "/csv-to-sql", label: "CSV → SQL" },
-  { href: "/csv-to-json", label: "CSV → JSON" },
-  { href: "/json-to-sql", label: "JSON → SQL" },
-  { href: "/json-to-schema", label: "JSON → Schema" },
+  {
+    href: "/csv-to-sql",
+    label: "CSV → SQL",
+    description: "Generate CREATE TABLE and INSERT statements",
+  },
+  {
+    href: "/csv-to-json",
+    label: "CSV → JSON",
+    description: "Turn spreadsheet rows into typed JSON objects",
+  },
+  {
+    href: "/json-to-sql",
+    label: "JSON → SQL",
+    description: "Infer a SQL schema from a JSON sample",
+  },
+  {
+    href: "/json-to-schema",
+    label: "JSON → Schema",
+    description: "Generate JSON Schema or OpenAPI components",
+  },
 ];
 
 export default function MobileNav() {
   const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  // Close on outside click
+  useEffect(() => {
+    function handleClick(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    }
+    if (open) document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, [open]);
+
+  // Close on route change / escape key
+  useEffect(() => {
+    function handleKey(e: KeyboardEvent) {
+      if (e.key === "Escape") setOpen(false);
+    }
+    document.addEventListener("keydown", handleKey);
+    return () => document.removeEventListener("keydown", handleKey);
+  }, []);
 
   return (
-    <div className="md:hidden">
+    <div className="relative md:hidden" ref={ref}>
       <button
-        onClick={() => setOpen(true)}
-        aria-label="Open menu"
-        className="flex h-9 w-9 items-center justify-center rounded-md border border-hairline-strong bg-surface-card text-ink cursor-pointer"
+        onClick={() => setOpen((o) => !o)}
+        aria-label={open ? "Close menu" : "Open menu"}
+        aria-expanded={open}
+        className="flex h-9 w-9 items-center justify-center rounded-md border border-hairline-strong bg-surface-card text-ink transition-colors hover:border-primary cursor-pointer"
       >
-        <Menu size={16} />
+        {open ? <X size={16} /> : <Menu size={16} />}
       </button>
 
-      {/* Backdrop */}
-      {open && (
-        <div
-          className="fixed inset-0 z-40 bg-ink/40"
-          onClick={() => setOpen(false)}
-        />
-      )}
-
-      {/* Drawer */}
+      {/* Dropdown panel */}
       <div
-        className={`fixed right-0 top-0 z-50 h-full w-64 bg-canvas shadow-none border-l border-hairline transform transition-transform duration-200 ${
-          open ? "translate-x-0" : "translate-x-full"
-        }`}
+        className={`absolute right-0 top-[calc(100%+10px)] w-[calc(100vw-48px)] max-w-sm rounded-lg border border-hairline bg-surface-card shadow-none overflow-hidden
+          transition-all duration-200 origin-top-right
+          ${open
+            ? "opacity-100 scale-100 translate-y-0 pointer-events-auto"
+            : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
+          }`}
       >
-        <div className="flex items-center justify-between border-b border-hairline px-5 py-4">
-          <span className="text-[15px] font-normal text-ink">
-            Table<span className="text-primary">Shift</span>
-          </span>
-          <button
-            onClick={() => setOpen(false)}
-            aria-label="Close menu"
-            className="flex h-8 w-8 items-center justify-center rounded-md text-muted hover:text-ink cursor-pointer"
-          >
-            <X size={16} />
-          </button>
-        </div>
-
-        <nav className="flex flex-col px-4 py-4 gap-1">
-          <p className="px-2 py-1.5 text-[11px] font-semibold uppercase tracking-[0.06em] text-muted">
+        {/* Header */}
+        <div className="border-b border-hairline px-4 py-3">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.06em] text-muted">
             Converters
           </p>
+        </div>
+
+        {/* Links */}
+        <nav className="flex flex-col p-2">
           {converters.map((c) => (
             <Link
               key={c.href}
               href={c.href}
               onClick={() => setOpen(false)}
-              className="rounded-md px-3 py-2.5 text-sm font-medium text-body hover:bg-surface-card hover:text-ink transition-colors"
+              className="group flex items-start justify-between gap-3 rounded-md px-3 py-3 transition-colors hover:bg-canvas"
             >
-              {c.label}
+              <div className="flex flex-col gap-0.5">
+                <span className="text-sm font-semibold text-ink">
+                  {c.label}
+                </span>
+                <span className="text-xs text-muted">{c.description}</span>
+              </div>
+              <ArrowRight
+                size={14}
+                className="mt-0.5 shrink-0 text-muted opacity-0 group-hover:opacity-100 transition-opacity"
+              />
             </Link>
           ))}
         </nav>
+
+        {/* Footer note */}
+        <div className="border-t border-hairline px-4 py-3">
+          <p className="text-[11px] text-muted-soft">
+            All conversions run in your browser — nothing uploaded.
+          </p>
+        </div>
       </div>
     </div>
   );
