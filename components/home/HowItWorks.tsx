@@ -15,7 +15,7 @@ const steps = [
     number: "03",
     title: "Adjust settings if needed",
     description:
-      "Override any column type with a single click. For SQL output, pick your dialect (MySQL, PostgreSQL, or SQLite) and set the table name. Every change reflects instantly in the output.",
+      "Override any column type with a single click. For SQL output, pick your dialect (MySQL, PostgreSQL, or SQLite) and set the table name. Every change reflects instantly.",
   },
   {
     number: "04",
@@ -27,8 +27,8 @@ const steps = [
 
 export default function HowItWorks() {
   return (
-    <section id="how-it-works" className="border-t border-hairline">
-      <div className="mx-auto max-w-[1200px] px-6 py-16 sm:py-20">
+    <section id="how-it-works" className="bg-canvas border-b border-hairline">
+      <div className="mx-auto max-w-300 px-6 py-14 sm:py-18">
         <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-muted">
           How it works
         </p>
@@ -38,7 +38,6 @@ export default function HowItWorks() {
         <p className="mt-3 max-w-[50ch] text-[15px] leading-[1.6] text-body">
           Designed to get out of your way — paste, tweak if needed, copy.
         </p>
-
         <div className="mt-12 grid grid-cols-1 gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
           {steps.map((step, i) => (
             <div key={step.number} className="flex flex-col gap-4">
@@ -48,7 +47,6 @@ export default function HowItWorks() {
                     {step.number}
                   </span>
                 </div>
-                {/* Connector line — hide on last item */}
                 {i < steps.length - 1 && (
                   <div className="hidden h-px flex-1 bg-hairline lg:block" />
                 )}

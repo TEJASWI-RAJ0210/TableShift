@@ -38,8 +38,8 @@ const converters = [
 
 export default function ConverterGrid() {
   return (
-    <section className="border-t border-hairline bg-canvas">
-      <div className="mx-auto max-w-[1200px] px-6 py-16 sm:py-20">
+    <section className="bg-canvas border-b border-hairline">
+      <div className="mx-auto max-w-300 px-6 py-14 sm:py-18">
         <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-muted">
           Converters
         </p>
@@ -50,7 +50,6 @@ export default function ConverterGrid() {
           Every converter shares the same smart type inference engine and
           runs entirely in your browser.
         </p>
-
         <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2">
           {converters.map((c) => (
             <Link

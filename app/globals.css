@@ -95,3 +95,11 @@ body {
 .theme-ready * {
   transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease;
 }
+
+html {
+  scroll-behavior: smooth;
+}
+
+section {
+  isolation: isolate;
+}

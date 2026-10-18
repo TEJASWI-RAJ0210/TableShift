@@ -48,8 +48,8 @@ const features: Feature[] = [
 
 export default function Features() {
   return (
-    <section className="border-t border-hairline bg-canvas">
-      <div className="mx-auto max-w-[1200px] px-6 py-16 sm:py-20">
+    <section className="bg-canvas border-b border-hairline">
+      <div className="mx-auto max-w-300 px-6 py-14 sm:py-18">
         <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-muted">
           Features
         </p>
@@ -59,7 +59,6 @@ export default function Features() {
         <p className="mt-3 max-w-[50ch] text-[15px] leading-[1.6] text-body">
           No ads, no tracking, no upsells. Just a tool that works.
         </p>
-
         <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {features.map((f) => (
             <div
