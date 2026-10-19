@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     title: "CSV to JSON Converter — TableShift",
     description:
       "Turn spreadsheet rows into properly typed JSON objects. Free, no signup.",
-    url: "https://yourdomain.com/csv-to-json",
+    url: "https://table-shift-one.vercel.app/csv-to-json",
     siteName: "TableShift",
     type: "website",
   },

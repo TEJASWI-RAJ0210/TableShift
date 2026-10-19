@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     title: "JSON to Schema Converter — TableShift",
     description:
       "Paste a JSON payload and get a JSON Schema or OpenAPI component instantly. Free, no signup.",
-    url: "https://yourdomain.com/json-to-schema",
+    url: "https://table-shift-one.vercel.app/json-to-schema",
     siteName: "TableShift",
     type: "website",
   },

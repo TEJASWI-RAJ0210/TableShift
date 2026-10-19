@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     title: "CSV to SQL Converter — TableShift",
     description:
       "Paste CSV data and get ready-to-run SQL in seconds. Free, no signup, works offline.",
-    url: "https://yourdomain.com/csv-to-sql",
+    url: "https://table-shift-one.vercel.app/csv-to-sql",
     siteName: "TableShift",
     type: "website",
   },
