@@ -3,20 +3,20 @@ import { ArrowLeft } from "lucide-react";
 
 export default function NotFound() {
   return (
-    <div className="mx-auto flex max-w-[1200px] flex-col items-start justify-center px-6 py-32">
+    <div className="mx-auto flex max-w-300 flex-col items-start justify-center px-6 py-32">
       <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.06em] text-muted">
         404
       </p>
       <h1 className="mb-4 text-[36px] font-normal leading-[1.1] tracking-[-0.02em] text-ink sm:text-[48px]">
         Page not found.
       </h1>
-      <p className="mb-8 max-w-[45ch] text-[16px] leading-[1.5] text-body">
+      <p className="mb-8 max-w-[45ch] text-[16px] leading-normal text-body">
         The page you're looking for doesn't exist. It may have been moved or
         the URL might be wrong.
       </p>
       <Link
         href="/"
-        className="inline-flex items-center gap-2 rounded-md bg-primary px-[18px] py-[10px] text-[14px] font-medium text-on-primary hover:bg-primary-active transition-colors"
+        className="inline-flex items-center gap-2 rounded-md bg-primary px-4.5 py-2.5 text-[14px] font-medium text-on-primary hover:bg-primary-active transition-colors"
       >
         <ArrowLeft size={15} />
         Back to home

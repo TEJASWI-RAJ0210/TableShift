@@ -29,6 +29,8 @@ TableShift is a free, open-source data conversion tool that runs entirely in the
 | Code display | CodeMirror 6 |
 | Icons | Lucide React |
 | Fonts | Inter + JetBrains Mono |
+| Testing (unit) | Vitest |
+| Testing (E2E) | Playwright |
 | Deployment | Vercel |
 
 ---
@@ -38,30 +40,50 @@ TableShift is a free, open-source data conversion tool that runs entirely in the
 ```
 tableshift/
 ├── app/
-│   ├── layout.tsx               # Root layout, fonts, dark mode script
-│   ├── page.tsx                 # Homepage
-│   ├── globals.css              # Design tokens (CSS variables, light + dark)
-│   ├── csv-to-sql/page.tsx
-│   ├── csv-to-json/page.tsx
-│   ├── json-to-sql/page.tsx
-│   └── json-to-schema/page.tsx
+│   ├── layout.tsx                    # Root layout, fonts, dark mode script
+│   ├── page.tsx                      # Homepage (composes home section components)
+│   ├── globals.css                   # Design tokens (CSS variables, light + dark)
+│   ├── not-found.tsx                 # Branded 404 page
+│   ├── csv-to-sql/
+│   │   ├── page.tsx
+│   │   └── layout.tsx                # Per-page SEO metadata
+│   ├── csv-to-json/
+│   │   ├── page.tsx
+│   │   └── layout.tsx
+│   ├── json-to-sql/
+│   │   ├── page.tsx
+│   │   └── layout.tsx
+│   ├── json-to-schema/
+│   │   ├── page.tsx
+│   │   └── layout.tsx
+│   ├── privacy/page.tsx              # Privacy policy
+│   └── terms/page.tsx                # Terms of service
 ├── components/
 │   ├── layout/
 │   │   ├── Header.tsx
-│   │   └── Footer.tsx
+│   │   ├── Footer.tsx
+│   │   └── MobileNav.tsx             # Top dropdown mobile nav
+│   ├── home/
+│   │   ├── Hero.tsx                  # Full-viewport hero with terminal image
+│   │   ├── ConverterGrid.tsx         # Four converter cards
+│   │   ├── HowItWorks.tsx            # Four-step walkthrough
+│   │   ├── Features.tsx              # Feature cards grid
+│   │   ├── FAQ.tsx                   # Accordion FAQ
+│   │   └── CTABand.tsx               # Bottom call-to-action
 │   ├── converter/
-│   │   ├── InputPanel.tsx       # Paste area + file upload
-│   │   ├── OutputPanel.tsx      # Syntax-highlighted output + copy/download
-│   │   ├── StatusPill.tsx       # Conversion state indicator
-│   │   ├── DialectSelector.tsx  # SQL dialect picker
-│   │   └── ColumnSettings.tsx   # Per-column type override UI
+│   │   ├── InputPanel.tsx            # Paste area + file upload
+│   │   ├── OutputPanel.tsx           # Syntax-highlighted output + copy/download
+│   │   ├── StatusPill.tsx            # Conversion state indicator
+│   │   ├── DialectSelector.tsx       # SQL dialect picker
+│   │   └── ColumnSettings.tsx        # Per-column type override UI
+│   ├── ErrorBoundary.tsx             # Catches runtime crashes gracefully
 │   └── ui/
-│       └── ThemeToggle.tsx      # Light/dark mode toggle
+│       └── ThemeToggle.tsx           # Light/dark mode toggle
 ├── lib/
-│   ├── types.ts                 # Shared TypeScript types (DataModel, etc.)
-│   ├── useTheme.ts              # Dark mode hook
+│   ├── types.ts                      # Shared TypeScript types (DataModel, etc.)
+│   ├── useTheme.ts                   # Dark mode hook
 │   ├── inference/
-│   │   └── typeInference.ts     # Majority-vote column type inference engine
+│   │   └── typeInference.ts          # Majority-vote column type inference engine
 │   ├── parsers/
 │   │   ├── csvParser.ts
 │   │   ├── excelParser.ts
@@ -70,6 +92,30 @@ tableshift/
 │       ├── toSql.ts
 │       ├── toJson.ts
 │       └── toJsonSchema.ts
+├── __tests__/
+│   └── unit/
+│       ├── typeInference.test.ts
+│       ├── csvParser.test.ts
+│       ├── jsonParser.test.ts
+│       ├── toSql.test.ts
+│       ├── toJson.test.ts
+│       └── toJsonSchema.test.ts
+├── e2e/
+│   ├── helpers.ts
+│   ├── homepage.spec.ts
+│   ├── csv-to-sql.spec.ts
+│   ├── csv-to-json.spec.ts
+│   ├── json-to-sql.spec.ts
+│   ├── json-to-schema.spec.ts
+│   └── fixtures/
+│       ├── test-basic.csv
+│       └── test-basic.json
+├── public/
+│   ├── favicon.svg
+│   └── hero-terminal.svg
+├── next.config.ts                    # Security headers
+├── vitest.config.ts
+└── playwright.config.ts
 ```
 
 ---
@@ -106,6 +152,36 @@ npm start
 
 ---
 
+## Running Tests
+
+### Unit tests (Vitest)
+
+```bash
+# Run once
+npm run test:run
+
+# Watch mode
+npm run test
+
+# Visual UI
+npm run test:ui
+```
+
+### E2E tests (Playwright)
+
+```bash
+# Run all (starts dev server automatically)
+npm run test:e2e
+
+# Interactive UI mode
+npm run test:e2e:ui
+
+# View last run report
+npm run test:e2e:report
+```
+
+---
+
 ## How Type Inference Works
 
 TableShift scans every value in a column and votes on its type. The type with the most votes wins — but only if it has at least 90% agreement across non-empty values. Otherwise the column safely falls back to `VARCHAR` or `TEXT`. This means one stray empty cell won't break an otherwise clearly-integer column.
@@ -127,6 +203,22 @@ TableShift uses a warm-editorial design language — a cream canvas in light mod
 Dark mode is toggled via the button in the header. Preference is persisted in `localStorage` and applied before first paint to avoid a flash of the wrong theme.
 
 Color tokens, typography scale, and component patterns are all defined as CSS custom properties in `app/globals.css` and exposed to Tailwind via `@theme inline`.
+
+---
+
+## Security
+
+TableShift is a fully client-side application. All conversions run in the browser — no data is ever transmitted to a server. Security headers (X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy, X-XSS-Protection) are configured in `next.config.ts` and applied on every route via Vercel.
+
+---
+
+## Roadmap
+
+- [ ] SQL → CSV / JSON (reverse conversion)
+- [ ] Excel export from JSON/SQL input
+- [ ] More SQL dialects (BigQuery, Snowflake, Oracle)
+- [ ] Saved conversion history (optional login, Phase 2)
+- [ ] Developer API (rate-limited, key-based, Phase 2)
 
 ---
 
@@ -153,4 +245,4 @@ MIT — see [LICENSE](LICENSE) for details.
 
 ---
 
-Built by [Tejaswi Raj](https://github.com/TEJASWI-RAJ0210) 
+Built by [Tejaswi Raj](https://github.com/TEJASWI-RAJ0210)
